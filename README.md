@@ -1,7 +1,7 @@
 # Rusty-benches
 A collection of benchmark fo rspatial data structures
 
-![image](https://user-images.githubusercontent.com/5385314/227788173-d4d28779-a66a-4f4d-9b48-04c34657eda4.png)
+![image](https://user-images.githubusercontent.com/5385314/227788273-655fc0d6-940e-44d5-bc0c-6fd383262238.png)
 
 
-![image](https://user-images.githubusercontent.com/5385314/227788162-b57c896f-cdd8-4c6d-9dea-f5579f3e4598.png)
+![image](https://user-images.githubusercontent.com/5385314/227788323-d7525842-631f-46cc-a7de-d41a4d528c1e.png)
