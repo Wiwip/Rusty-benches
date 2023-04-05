@@ -1,6 +1,6 @@
 use kd_tree::KdTree;
 use SpatialBenches::Spatial;
-use SpatialBenches::utilities::random_points;
+use SpatialBenches::utilities::{random_points, uniform_position};
 
 pub struct Benchmark {
     tree: KdTree<[f32; 3]>,
@@ -21,10 +21,10 @@ impl Spatial for Benchmark {
     }
 
     fn nearest(&mut self) {
-        self.tree.nearest(&[0.0, 0.0, 0.0]);
+        self.tree.nearest(&uniform_position());
     }
 
     fn within(&mut self, range: f32) {
-        self.tree.within_radius(&[0.0, 0.0, 0.0], range);
+        self.tree.within_radius(&uniform_position(), range);
     }
 }

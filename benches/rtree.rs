@@ -1,6 +1,6 @@
 use rstar::RTree;
 use SpatialBenches::Spatial;
-use SpatialBenches::utilities::random_points;
+use SpatialBenches::utilities::{random_points, uniform_position};
 
 #[derive(Default)]
 pub struct Benchmark {
@@ -22,10 +22,10 @@ impl Spatial for Benchmark {
     }
 
     fn nearest(&mut self) {
-        self.tree.nearest_neighbor(&[0.0, 0.0, 0.0]);
+        self.tree.nearest_neighbor(&uniform_position());
     }
 
     fn within(&mut self, range: f32) {
-        self.tree.locate_within_distance([0.0, 0.0, 0.0], range);
+        self.tree.locate_within_distance(uniform_position(), range);
     }
 }

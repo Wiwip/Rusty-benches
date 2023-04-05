@@ -5,4 +5,3 @@ pub trait Spatial {
     fn nearest(&mut self);
     fn within(&mut self, range: f32);
 }
-

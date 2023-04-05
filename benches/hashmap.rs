@@ -2,7 +2,7 @@ use rand_distr::num_traits::pow;
 use std::collections::hash_map::Entry;
 use std::collections::HashMap;
 use SpatialBenches::Spatial;
-use SpatialBenches::utilities::random_points;
+use SpatialBenches::utilities::{random_points, uniform_position};
 
 type Point2 = [f32; 3];
 type IPoint2 = [i32; 3];
@@ -50,12 +50,12 @@ impl Spatial for Benchmark {
     }
 
     fn nearest(&mut self) {
-        //self.tree.nearest_neighbor(&[0.0, 0.0, 0.0]);
+
     }
 
     fn within(&mut self, range: f32) {
         let mut list = Vec::new();
-        let local = self.global_to_map_loc([0.0, 0.0, 0.0]);
+        let local = self.global_to_map_loc(uniform_position());
 
         // Broad range checks
         for offset in self.list_offsets.iter() {

@@ -5,6 +5,7 @@ use SpatialBenches::Spatial;
 mod hashmap;
 mod kdtree;
 mod rtree;
+mod rapier;
 
 criterion_main!(spatial_benches);
 criterion_group!(spatial_benches, spatial_tests);
@@ -12,8 +13,8 @@ criterion_group!(spatial_benches, spatial_tests);
 fn spatial_tests(c: &mut Criterion) {
     let range = 32.0;
 
-    let mut g = c.benchmark_group("Bulk Insert Time Comparison");
-    for i in [500, 1000, 2500, 5000, 10000].iter() {
+    let mut g = c.benchmark_group("Bulk Insert");
+    for i in [100,].iter() {
         let mut kd_bench = kdtree::Benchmark::new();
         g.bench_with_input(BenchmarkId::new("KdTree", i), i, |b, i| {
             b.iter(|| kd_bench.build_tree(*i))
@@ -32,11 +33,17 @@ fn spatial_tests(c: &mut Criterion) {
         g.bench_with_input(BenchmarkId::new("HashMap", i), i, |b, i| {
             b.iter(|| hashmap_bench.build_tree(*i))
         });
+
+        let mut rapier_bench = rapier::Benchmark::new();
+        g.bench_with_input(BenchmarkId::new("Rapier", i), i, |b, i| {
+            b.iter(|| rapier_bench.build_tree(*i))
+        });
+
     }
     g.finish();
 
-    let mut g = c.benchmark_group("Spatial Queries Comparison");
-    for i in [500, 1000, 2500, 5000, 10000].iter() {
+    let mut g = c.benchmark_group("Spatial Queries");
+    for i in [100,].iter() {
         let mut kd_bench = kdtree::Benchmark::new();
         kd_bench.build_tree(*i);
         g.bench_with_input(BenchmarkId::new("KdTree", i), i, |b, i| {
@@ -67,6 +74,22 @@ fn spatial_tests(c: &mut Criterion) {
         hashmap_bench.build_tree(*i);
         g.bench_with_input(BenchmarkId::new("HashMap", i), i, |b, i| {
             b.iter(|| hashmap_bench.within(range))
+        });
+
+        let mut rapier_bench = rapier::Benchmark::new();
+        rapier_bench.build_tree(*i);
+        g.bench_with_input(BenchmarkId::new("Rapier", i), i, |b, i| {
+            b.iter(|| rapier_bench.within(range))
+        });
+    }
+    g.finish();
+
+    let mut g = c.benchmark_group("Stepping Physics");
+    for i in [1,].iter() {
+        let mut rapier_bench = rapier::Benchmark::new();
+        rapier_bench.build_tree(*i);
+        g.bench_with_input(BenchmarkId::new("Step Rapier", i), i, |b, i| {
+            b.iter(|| rapier_bench.step(*i))
         });
     }
     g.finish();
